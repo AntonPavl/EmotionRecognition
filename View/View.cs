@@ -20,17 +20,17 @@ namespace View
 
         private void View_Load(object sender, EventArgs e)
         {
-            // Hello, bro! Antoha
-            // Merge with master
         }
+
         private void openImageButton_Click(object sender, EventArgs e)
         {
             if (openImageDialog.ShowDialog() == DialogResult.OK)
             {
                 _image = new ImageRecognition.Image(openImageDialog.FileName);
-                mainImageBox.Image = _image.GetImage();  
+                mainImageBox.Image = _image.InnerImage;  
             }
         }
+
         private void openRGBChartButton_Click(object sender, EventArgs e)
         {
             if (_image != null)
