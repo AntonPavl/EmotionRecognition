@@ -19,7 +19,8 @@ namespace View
 
         private void View_Load(object sender, EventArgs e)
         {
-            // Hello, bro! Master
+            // Hello, bro! Antoha
+            // Merge with master
         }
     }
 }
