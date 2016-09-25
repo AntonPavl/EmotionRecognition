@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using ImageRecognition;
 namespace View
 {
     public partial class View : Form
     {
+        private ImageRecognition.Image _image;
         public View()
         {
             InitializeComponent();
@@ -22,5 +23,22 @@ namespace View
             // Hello, bro! Antoha
             // Merge with master
         }
+        private void openImageButton_Click(object sender, EventArgs e)
+        {
+            if (openImageDialog.ShowDialog() == DialogResult.OK)
+            {
+                _image = new ImageRecognition.Image(openImageDialog.FileName);
+                mainImageBox.Image = _image.GetImage();  
+            }
+        }
+        private void openRGBChartButton_Click(object sender, EventArgs e)
+        {
+            if (_image != null)
+            { 
+                ViewRGBChart form = new ViewRGBChart(_image);
+                form.Show();
+            }
+        }
+
     }
 }
