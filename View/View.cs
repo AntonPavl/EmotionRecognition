@@ -19,7 +19,7 @@ namespace View
 
         private void View_Load(object sender, EventArgs e)
         {
-            // Hello
+            // Hello, bro!
         }
     }
 }
