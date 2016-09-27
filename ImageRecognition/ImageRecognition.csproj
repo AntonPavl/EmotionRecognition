@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Filters\Implementations\BinaryFilter.cs" />
+    <Compile Include="Filters\Implementations\LowFreqFilter.cs" />
+    <Compile Include="Filters\Implementations\NegativeFilter.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Pixel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -38,5 +38,20 @@ namespace View
                 //chart2.Series[0].Points.AddXY(i, B[i]);
             }
         }
+
+        private void redCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            imageChart.Series[0].Enabled = !imageChart.Series[0].Enabled;
+        }
+
+        private void greenCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            imageChart.Series[1].Enabled = !imageChart.Series[1].Enabled;
+        }
+
+        private void blueCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            imageChart.Series[2].Enabled = !imageChart.Series[2].Enabled;
+        }
     }
 }

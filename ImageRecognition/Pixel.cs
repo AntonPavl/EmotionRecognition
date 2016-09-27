@@ -8,8 +8,8 @@ namespace ImageRecognition
 {
     public struct Pixel
     {
-        public Byte Red;
-        public Byte Green;
-        public Byte Blue;
+        public byte Red;
+        public byte Green;
+        public byte Blue;
     }
 }

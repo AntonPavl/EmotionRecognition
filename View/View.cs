@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using SysImage = System.Drawing.Image;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImageRecognition;
+using System.IO;
+using ImageRecognition.Filters.Implementations;
+
 namespace View
 {
     public partial class View : Form
     {
-        private ImageRecognition.Image _image;
+        private Image _image;
+
         public View()
         {
             InitializeComponent();
@@ -26,19 +30,52 @@ namespace View
         {
             if (openImageDialog.ShowDialog() == DialogResult.OK)
             {
-                _image = new ImageRecognition.Image(openImageDialog.FileName);
-                mainImageBox.Image = _image.InnerImage;  
+                using (var fs = new FileStream(openImageDialog.FileName, FileMode.Open))
+                    mainImageBox.Image = SysImage.FromStream(fs);
+
+                _image = new Image(openImageDialog.FileName);
             }
         }
 
         private void openRGBChartButton_Click(object sender, EventArgs e)
         {
-            if (_image != null)
-            { 
-                ViewRGBChart form = new ViewRGBChart(_image);
-                form.Show();
-            }
+            var form = new ViewRGBChart(_image);
+            form.Show();
         }
 
+        private void negativeFilter_Click(object sender, EventArgs e)
+        {
+            _image = new Image(openImageDialog.FileName);
+            _image = _image.Apply(new NegativeFilter());
+            mainImageBox.Image = _image.GetImage();
+        }
+
+        private void lowFreqFilter_Click(object sender, EventArgs e)
+        {
+            _image = new Image(openImageDialog.FileName);
+
+            var m = new int[3, 3];
+
+            m[0, 0] = 1;
+            m[1, 0] = 1;
+            m[0, 1] = 1;
+            m[0, 2] = 1;
+            m[1, 1] = 1;
+            m[1, 2] = 1;
+            m[2, 0] = 1;
+            m[2, 1] = 1;
+            m[2, 2] = 1;
+
+            _image = _image.Apply(new LowFreqFilter(m));
+
+            mainImageBox.Image = _image.GetImage();
+        }
+
+        private void binaryFilter_Click(object sender, EventArgs e)
+        {
+            _image = new Image(openImageDialog.FileName);
+            _image = _image.Apply(new BinaryFilter());
+            mainImageBox.Image = _image.GetImage();
+        }
     }
 }
