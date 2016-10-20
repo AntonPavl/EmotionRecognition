@@ -40,5 +40,10 @@ namespace View
                 imageChart.Series[2].Points.AddXY(i, B[i]);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            imageChart.Series[0].Enabled = imageChart.Series[0].Enabled == false ? true : false;
+        }
     }
 }

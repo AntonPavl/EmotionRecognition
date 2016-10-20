@@ -43,11 +43,8 @@ namespace ImageRecognition
             int numBytes = bmpData.Stride * bmp.Height;
             byte[] rgbValues = new byte[numBytes];
             Marshal.Copy(bmpData.Scan0, rgbValues, 0, numBytes);
-            for (int counter = 0; counter <= rgbValues.Length-1; counter += 3)
+            for (int counter = 0; counter <= rgbValues.Length-3; counter += 3)
             {
-                //double value = 0.3 * rgbValues[counter] + 0.59 * rgbValues[counter + 1] + 0.11 * rgbValues[counter + 2];
-                //byte color_b = 0;
-                //color_b = Convert.ToByte(value / 3);
                 _pixelList.Add(new Pixel
                 {
                     Blue = rgbValues[counter],

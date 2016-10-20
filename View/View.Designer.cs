@@ -37,7 +37,7 @@
             // 
             // openImageButton
             // 
-            this.openImageButton.Location = new System.Drawing.Point(57, 356);
+            this.openImageButton.Location = new System.Drawing.Point(106, 84);
             this.openImageButton.Name = "openImageButton";
             this.openImageButton.Size = new System.Drawing.Size(145, 43);
             this.openImageButton.TabIndex = 0;
@@ -51,9 +51,9 @@
             // 
             // mainImageBox
             // 
-            this.mainImageBox.Location = new System.Drawing.Point(12, 115);
+            this.mainImageBox.Location = new System.Drawing.Point(415, 12);
             this.mainImageBox.Name = "mainImageBox";
-            this.mainImageBox.Size = new System.Drawing.Size(240, 224);
+            this.mainImageBox.Size = new System.Drawing.Size(814, 452);
             this.mainImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.mainImageBox.TabIndex = 1;
             this.mainImageBox.TabStop = false;
@@ -61,7 +61,7 @@
             // openRGBChartButton
             // 
             this.openRGBChartButton.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.openRGBChartButton.Location = new System.Drawing.Point(57, 424);
+            this.openRGBChartButton.Location = new System.Drawing.Point(106, 149);
             this.openRGBChartButton.Name = "openRGBChartButton";
             this.openRGBChartButton.Size = new System.Drawing.Size(145, 40);
             this.openRGBChartButton.TabIndex = 3;
