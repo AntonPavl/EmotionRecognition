@@ -16,6 +16,7 @@ namespace View
     public partial class View : Form
     {
         private Image _image;
+        private Image _originalImage;
 
         public View()
         {
@@ -33,6 +34,7 @@ namespace View
                 using (var fs = new FileStream(openImageDialog.FileName, FileMode.Open))
                     mainImageBox.Image = SysImage.FromStream(fs);
 
+                _originalImage = new Image(openImageDialog.FileName);
                 _image = new Image(openImageDialog.FileName);
             }
         }
@@ -45,15 +47,12 @@ namespace View
 
         private void negativeFilter_Click(object sender, EventArgs e)
         {
-            _image = new Image(openImageDialog.FileName);
             _image = _image.Apply(new NegativeFilter());
             mainImageBox.Image = _image.GetImage();
         }
 
         private void lowFreqFilter_Click(object sender, EventArgs e)
         {
-            _image = new Image(openImageDialog.FileName);
-
             var m = new int[3, 3];
 
             m[0, 0] = 1;
@@ -73,8 +72,13 @@ namespace View
 
         private void binaryFilter_Click(object sender, EventArgs e)
         {
-            _image = new Image(openImageDialog.FileName);
-            _image = _image.Apply(new BinaryFilter());
+            _image = _image.Apply(new BinaryFilter(),brightBar.Value);
+            mainImageBox.Image = _image.GetImage();
+        }
+
+        private void openOriginalImage_Click(object sender, EventArgs e)
+        {
+            _image = new Image(_originalImage);
             mainImageBox.Image = _image.GetImage();
         }
     }

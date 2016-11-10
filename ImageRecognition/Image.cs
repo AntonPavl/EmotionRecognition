@@ -1,4 +1,5 @@
-﻿using ImageRecognition.Filters;
+﻿using ImageRecognition.Filters.Implementations;
+using ImageRecognition.Filters;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -48,10 +49,9 @@ namespace ImageRecognition
             Height = src.Height;
         }
 
-        public Image Apply(IFilter filter)
-        {
-            return filter.Apply(this);
-        }
+        public Image Apply(IFilter filter) => filter.Apply(this);
+
+        public Image Apply(BinaryFilter filter, int extra) => filter.Apply(this, extra);
 
         public Bitmap GetImage()
         {

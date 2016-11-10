@@ -28,5 +28,24 @@ namespace ImageRecognition.Filters.Implementations
 
             return image;
         }
+        public Image Apply(Image img,int border)
+        {
+            var image = new Image(img);
+
+            for (int i = 0; i < image.PixelCounts; i++)
+            {
+                var pixel = image.Pixels[i];
+
+                var y = 0.3 * pixel.Red + 0.59 * pixel.Green + 0.11 * pixel.Blue;
+
+                pixel.Blue = (byte)(y > border ? 255 : 0);
+                pixel.Green = (byte)(y > border ? 255 : 0);
+                pixel.Red = (byte)(y > border ? 255 : 0);
+
+                image.Pixels[i] = pixel;
+            }
+
+            return image;
+        }
     }
 }
