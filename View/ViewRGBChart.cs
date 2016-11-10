@@ -1,49 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using ImageRecognition;
+
 namespace View
 {
     public partial class ViewRGBChart : Form
     {
-        public ViewRGBChart(ImageRecognition.Image image)
+        public ViewRGBChart(Image image)
         {
             InitializeComponent();
-            drawChart(image);
+            DrawChart(image);
         }
-        private void drawChart(ImageRecognition.Image image)
+
+        private void DrawChart(Image image)
         {
             imageChart.Series[0].Points.Clear();
             imageChart.Series[1].Points.Clear();
             imageChart.Series[2].Points.Clear();
-            int[] R = new int[256];
-            int[] G = new int[256];
-            int[] B = new int[256];
-            foreach (var pixel in image.PixelEnumerable())
+
+            var R = new int[256];
+            var G = new int[256];
+            var B = new int[256];
+
+            foreach (var pixel in image)
             {
                 R[pixel.Red] += 1;
                 G[pixel.Green] += 1;
                 B[pixel.Blue] += 1;
             }
+
             for (int i = 0; i < 256; i++)
             {
                 imageChart.Series[0].Points.AddXY(i, R[i]);
                 imageChart.Series[1].Points.AddXY(i, G[i]);
+                imageChart.Series[2].Points.AddXY(i, B[i]);
+
                 //chart1.Series[0].Points.AddXY(i, G[i]);
                 //chart2.Series[0].Points.AddXY(i, B[i]);
-                imageChart.Series[2].Points.AddXY(i, B[i]);
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void redCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
-            imageChart.Series[0].Enabled = imageChart.Series[0].Enabled == false ? true : false;
+            imageChart.Series[0].Enabled = !imageChart.Series[0].Enabled;
+        }
+
+        private void greenCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            imageChart.Series[1].Enabled = !imageChart.Series[1].Enabled;
+        }
+
+        private void blueCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            imageChart.Series[2].Enabled = !imageChart.Series[2].Enabled;
         }
     }
 }
