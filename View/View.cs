@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using ImageRecognition;
 using System.IO;
 using ImageRecognition.Filters.Implementations;
+using ImageRecognition.Classificators;
+using ImageRecognition.Detectors;
 
 namespace View
 {
@@ -25,6 +27,7 @@ namespace View
 
         private void View_Load(object sender, EventArgs e)
         {
+            brightBar.Value = 127;
         }
 
         private void openImageButton_Click(object sender, EventArgs e)
@@ -44,7 +47,6 @@ namespace View
             var form = new ViewRGBChart(_image);
             form.Show();
         }
-
         private void negativeFilter_Click(object sender, EventArgs e)
         {
             _image = _image.Apply(new NegativeFilter());
@@ -53,18 +55,7 @@ namespace View
 
         private void lowFreqFilter_Click(object sender, EventArgs e)
         {
-            var m = new int[3, 3];
-
-            m[0, 0] = 1;
-            m[1, 0] = 1;
-            m[0, 1] = 1;
-            m[0, 2] = 1;
-            m[1, 1] = 1;
-            m[1, 2] = 1;
-            m[2, 0] = 1;
-            m[2, 1] = 1;
-            m[2, 2] = 1;
-
+            var m = new int[,] { { 1,1,1 }, { 1,1,1 }, { 1,1,1 } };
             _image = _image.Apply(new LowFreqFilter(m));
 
             mainImageBox.Image = _image.GetImage();
@@ -79,6 +70,27 @@ namespace View
         private void openOriginalImage_Click(object sender, EventArgs e)
         {
             _image = new Image(_originalImage);
+            mainImageBox.Image = _image.GetImage();
+        }
+
+        private int ind = 0;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (openClassDialog.ShowDialog() == DialogResult.OK)
+            {
+                _image.Apply(new GrayFilter());
+                var classifier = StrongClassifier.LoadFromFile(openClassDialog.FileName);
+                var detector = new Detector(_image, classifier);
+                ////////////////
+                foreach (var item in detector.Detect)
+                {
+
+                }
+                mainImageBox.Image = _image.GetImage();
+            }
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
             mainImageBox.Image = _image.GetImage();
         }
     }

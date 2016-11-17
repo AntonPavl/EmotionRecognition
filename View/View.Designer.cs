@@ -37,6 +37,9 @@
             this.binaryFilter = new System.Windows.Forms.Button();
             this.originalImageOpenButton = new System.Windows.Forms.Button();
             this.brightBar = new System.Windows.Forms.TrackBar();
+            this.button1 = new System.Windows.Forms.Button();
+            this.openClassDialog = new System.Windows.Forms.OpenFileDialog();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mainImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.brightBar)).BeginInit();
             this.SuspendLayout();
@@ -126,11 +129,37 @@
             this.brightBar.Size = new System.Drawing.Size(137, 45);
             this.brightBar.TabIndex = 8;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(466, 477);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(122, 36);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // openClassDialog
+            // 
+            this.openClassDialog.FileName = "openClassDialog";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(502, 205);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(109, 75);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 544);
+            this.ClientSize = new System.Drawing.Size(712, 549);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.brightBar);
             this.Controls.Add(this.originalImageOpenButton);
             this.Controls.Add(this.binaryFilter);
@@ -160,6 +189,9 @@
         private System.Windows.Forms.Button binaryFilter;
         private System.Windows.Forms.Button originalImageOpenButton;
         private System.Windows.Forms.TrackBar brightBar;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.OpenFileDialog openClassDialog;
+        private System.Windows.Forms.Button button2;
     }
 }
 

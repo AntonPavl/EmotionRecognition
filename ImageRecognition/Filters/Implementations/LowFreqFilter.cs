@@ -19,8 +19,7 @@ namespace ImageRecognition.Filters.Implementations
         public Image Apply(Image img)
         {
             var image = new Image(img);
-            var delete = 0;
-            Matrix m = new Matrix(_matrix);
+            var m = new Matrix(_matrix);
             for(int i = 1; i < image.Height - 1; i++)
             {
                 for(int j = 1; j < image.Width - 1; j++)
@@ -38,7 +37,7 @@ namespace ImageRecognition.Filters.Implementations
 
         private byte Calculate(int x, int y, Matrix m, Func<int, int, byte> get)
         {
-            return m.Result(x, y, get);
+            return (byte)(m.Result(x, y, get) / m.Size);
         }
     }
 }
