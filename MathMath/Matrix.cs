@@ -27,7 +27,6 @@ namespace MathMath
             {
                 for (int y = -size / 2; y <= size / 2; y++)
                 {
-                    Console.WriteLine(get(px + x, py + y));
                     sum += get(px + x, py + y) * array[size / 2 + x, size / 2 + x];
                 }
             }

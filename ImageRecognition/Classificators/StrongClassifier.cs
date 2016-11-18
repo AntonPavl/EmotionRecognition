@@ -35,11 +35,7 @@ namespace ImageRecognition.Classificators
                 var alpha = double.Parse(vals[0]);
                 var threshold = int.Parse(vals[1]);
                 var parity = sbyte.Parse(vals[2]);
-                var temp = asm.GetType("ImageRecognition.Feature.TwoVerticalRectanglesFeature");
                 var featureType = asm.GetType(vals[3]);
-                //if (!(featureType is IFeature)) { Console.WriteLine(featureType);
-                //	throw new Exception("Invalid feature type"); }
-
                 var featureX = int.Parse(vals[4]);
                 var featureY = int.Parse(vals[5]);
                 var featureWidth = int.Parse(vals[6]);

@@ -25,6 +25,7 @@ namespace ImageRecognition
 
 
         private List<Pixel> _pixels = new List<Pixel>();
+        private List<Pixel> _orignalPixels = new List<Pixel>();
         public List<Pixel> Pixels
         {
             get { return _pixels; }
@@ -33,8 +34,10 @@ namespace ImageRecognition
 
         public Pixel this[int x, int y]
         {
-            get { return Pixels[x + (Width+1) * y]; }
-            set { Pixels[x + (Width+1) * y] = value; }
+            //get { return Pixels[x + (Width) * y]; }
+            //set { Pixels[x + (Width+1) * y] = value; }
+            get { return Pixels[x + Width * y]; }
+            set { Pixels[x + Width * y] = value; }
         }
 
         public int PixelCounts => Pixels.Count;
@@ -74,7 +77,7 @@ namespace ImageRecognition
 
         public Bitmap GetImage()
         {
-            var bitmap = Pixels.SelectMany(p => new[] { p.Blue, p.Green, p.Red }).ToArray();
+            var bitmap = Pixels.GetRange(0, Width * Height).SelectMany(p => new[] { p.Blue, p.Green, p.Red }).ToArray();
             var bmp = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
             var data = bmp.LockBits(
                 new Rectangle(0, 0, Width, Height),
@@ -104,13 +107,24 @@ namespace ImageRecognition
             {
                 Console.WriteLine($"RGB{i} = B{rgbValues[i]},G{rgbValues[i + 1]},R{rgbValues[i + 2]}");
             }
-            for (int counter = 0; counter < rgbValues.Length; counter += 3)
+            for (int counter = 0; counter <= rgbValues.Length - 3; counter += 3)
             {
                 Pixels.Add(new Pixel
                 {
                     Blue = rgbValues[counter], 
                     Green = rgbValues[counter + 1],
                     Red = rgbValues[counter + 2]
+                });
+            }
+            //Pixels.InsertRange(0, _orignalPixels);
+            //_orignalPixels.InsertRange(0, Pixels);
+            for (int i = 0; i < Width; i++)
+            {
+                Pixels.Add(new Pixel
+                {
+                    Blue = 255,
+                    Green = 255,
+                    Red = 255
                 });
             }
             bmp.UnlockBits(bmpData);
@@ -139,7 +153,7 @@ namespace ImageRecognition
             for (int i = r.X; i < r.X + r.Width; i++)
             {
                 this[i,r.Y] = new Pixel()           { Blue = Config.B, Green = Config.G, Red = Config.R };
-                this[i, r.Y] = new Pixel() { Blue = Config.B, Green = Config.G, Red = Config.R };
+                this[i,r.Y+r.Height] = new Pixel()           { Blue = Config.B, Green = Config.G, Red = Config.R };
             }
             for (int i = r.Y; i < r.Y + r.Height; i++)
             {

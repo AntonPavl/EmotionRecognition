@@ -81,16 +81,21 @@ namespace View
                 _image.Apply(new GrayFilter());
                 var classifier = StrongClassifier.LoadFromFile(openClassDialog.FileName);
                 var detector = new Detector(_image, classifier);
-                ////////////////
-                foreach (var item in detector.Detect)
+                var i = 0;
+                foreach (var item in detector.Detect().Where(x => x.Deviation>51))
                 {
-
+                   // i++;
+                    //if (i > 5) break;
+                    _image.DrawRectangle(item.ToRectangle());
                 }
+                Console.WriteLine(i);
+               // _image.DrawRectangle(new System.Drawing.Rectangle(100,100,100,100));
                 mainImageBox.Image = _image.GetImage();
             }
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            _image.Apply(new GrayFilter());
             mainImageBox.Image = _image.GetImage();
         }
     }

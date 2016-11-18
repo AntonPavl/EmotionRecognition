@@ -19,18 +19,17 @@ namespace ImageRecognition.Detectors
             this.Classifier = Classifier;
             this.SquaredImage = SquaredImage;
         }
-        public Detector(Image Image, StrongClassifier Classifier): 
-            this(new Image(Image), new Image(Image, (pix) => (long)pix*pix),Classifier)
+        public Detector(Image Image, StrongClassifier Classifier) : this(new Image(Image), new Image(Image, (pix) => (long)pix*pix),Classifier)
         {
         }
-        public IEnumerable<Rectangle> Detect()
+        public IEnumerable<Window> Detect()
         {
             Func<Window, bool> check = (win) =>
-                this.Classifier.Check(win, this.Image);
-
-            return Window.ListWindows(this.Image, this.SquaredImage)
-                         .Where(check)
-                         .Select((win) => win.ToRectangle());
+                this.Classifier.Check(win, this.Image);  
+            foreach (var item in Window.ListWindows(this.Image, this.SquaredImage))
+            {
+                if (check(item)) yield return item;
+            }
         }
     }
 }

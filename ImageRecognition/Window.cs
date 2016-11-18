@@ -80,11 +80,11 @@ namespace ImageRecognition
 
 			var variance = squaredSum / nPixs - avg * avg;
 
-			if (variance > 0)
-				return (int)Math.Sqrt(variance);
-			else
-				return 1;
-		}
+            if (variance > 0)
+                return (int)Math.Sqrt(variance);
+            else
+                return 1;
+        }
 
 		public Rectangle ToRectangle()
 		{
@@ -96,9 +96,9 @@ namespace ImageRecognition
             var maxX = Image.Width - Config.WindowWidth;
             var maxY = Image.Height - Config.WindowHeight;
 
-            for (var x = 0; x <= maxX; x += Config.WindowDX)
+            for (var x = Config.WindowStartX; x <= maxX; x += Config.WindowDX)
             {
-                for (var y = 0; y <= maxY; y += Config.WindowDY)
+                for (var y = Config.WindowStartY; y <= maxY; y += Config.WindowDY)
                 {
                     var maxWidth = Image.Width - x;
                     var maxHeight = Image.Height - y;
@@ -106,17 +106,18 @@ namespace ImageRecognition
                     var width = Config.WindowWidth;
                     var height = Config.WindowHeight;
                     var ratio = 1f;
-                    yield return new Window(new Point(x, y), ratio, Image, SquaredImage); //!!
-                    //while (width <= maxWidth && height <= maxHeight)
-                    //{
-                    //    yield return new Window(new Point(x, y), ratio, Image, SquaredImage);
+                    //yield return new Window(new Point(x, y), ratio, Image, SquaredImage); //!!
+                    while (width <= maxWidth && height <= maxHeight)
+                    {
+                        yield return new Window(new Point(x, y), ratio, Image, SquaredImage);
 
-                    //    ratio *= Config.WindowScale;
-                    //    width = (int)(Config.WindowWidth * ratio);
-                    //    height = (int)(Config.WindowHeight * ratio);
-                    //}
+                        ratio *= Config.WindowScale;
+                        width = (int)(Config.WindowWidth * ratio);
+                        height = (int)(Config.WindowHeight * ratio);
+                    }
                 }
             }
         }
+
     }
 }
