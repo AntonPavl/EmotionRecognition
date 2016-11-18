@@ -82,10 +82,10 @@ namespace View
                 var classifier = StrongClassifier.LoadFromFile(openClassDialog.FileName);
                 var detector = new Detector(_image, classifier);
                 var i = 0;
-                foreach (var item in detector.Detect().Where(x => x.Deviation>51))
+                foreach (var item in detector.Detect().Where(x => x.Deviation>50))
                 {
-                   // i++;
-                    //if (i > 5) break;
+                    i++;
+                    if (i > 5) break;
                     _image.DrawRectangle(item.ToRectangle());
                 }
                 Console.WriteLine(i);
