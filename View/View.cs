@@ -76,24 +76,20 @@ namespace View
         private int ind = 0;
         private void button1_Click(object sender, EventArgs e)
         {
-            Config.WindowDX = _image.Width / 30;
-            Config.WindowDY = _image.Height / 30;
-            Config.WindowHeight = _image.Height / 30;
-            Config.WindowWidth = _image.Width / 30;
             if (openClassDialog.ShowDialog() == DialogResult.OK)
             {
                 _image.Apply(new GrayFilter());
                 var classifier = StrongClassifier.LoadFromFile(openClassDialog.FileName);
                 var detector = new Detector(_image, classifier);
                 var i = 0;
-                foreach (var item in detector.Detect())
+                foreach (var item in detector.Detect().Where(x => x.Deviation>51))
                 {
-                    if (item.Width > _image.Width * 0.4)
-                    { 
-                        i++;
-                        _image.DrawRectangle(item.ToRectangle());
-                    }
+                   // i++;
+                    //if (i > 5) break;
+                    _image.DrawRectangle(item.ToRectangle());
                 }
+                Console.WriteLine(i);
+               // _image.DrawRectangle(new System.Drawing.Rectangle(100,100,100,100));
                 mainImageBox.Image = _image.GetImage();
             }
         }
