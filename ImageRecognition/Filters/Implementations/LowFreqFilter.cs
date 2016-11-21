@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathMath;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,15 +19,15 @@ namespace ImageRecognition.Filters.Implementations
         public Image Apply(Image img)
         {
             var image = new Image(img);
-
+            var m = new Matrix(_matrix);
             for(int i = 1; i < image.Height - 1; i++)
             {
                 for(int j = 1; j < image.Width - 1; j++)
                 {
                     var pixel = image[i, j];
-                    pixel.Blue  = Calculate(i, j, _matrix, (x, y) => image[x, y].Blue);
-                    pixel.Green = Calculate(i, j, _matrix, (x, y) => image[x, y].Green);
-                    pixel.Red   = Calculate(i, j, _matrix, (x, y) => image[x, y].Red);
+                    pixel.Blue  = Calculate(i, j, m, (x, y) => image[x, y].Blue);
+                    pixel.Green = Calculate(i, j, m, (x, y) => image[x, y].Green);
+                    pixel.Red   = Calculate(i, j, m, (x, y) => image[x, y].Red);
                     image[i, j] = pixel;
                 }
             }
@@ -34,21 +35,9 @@ namespace ImageRecognition.Filters.Implementations
             return image;
         }
 
-        private byte Calculate(int x, int y, int[,] matrix, Func<int, int, byte> get)
+        private byte Calculate(int x, int y, Matrix m, Func<int, int, byte> get)
         {
-            double sum = 0.0;
-
-            sum += get(x, y)         * matrix[1, 1];
-            sum += get(x - 1, y)     * matrix[0, 1];
-            sum += get(x - 1, y - 1) * matrix[0, 0];
-            sum += get(x - 1, y + 1) * matrix[0, 2];
-            sum += get(x, y - 1)     * matrix[1, 0];
-            sum += get(x + 1, y - 1) * matrix[2, 0];
-            sum += get(x + 1, y + 1) * matrix[2, 2];
-            sum += get(x, y + 1)     * matrix[1, 2];
-            sum += get(x + 1, y)     * matrix[2, 1];
-
-            return (byte)(sum / 9.0);
+            return (byte)(m.Result(x, y, get) / m.Size);
         }
     }
 }

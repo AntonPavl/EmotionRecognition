@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ImageRecognition
 {
-    public struct Pixel
+    public class Pixel
     {
         public byte Red;
         public byte Green;
